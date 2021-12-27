@@ -35,6 +35,23 @@ dropzone.uploadFiles = function(files) {
   for (var i = 0; i < files.length; i++) {
 
     var file = files[i];
+    const url = "https://staging-webservice.supportgenie.io/v3"
+    const companyId = '5c01af56830f7879b727607d'
+     const formData = new FormData();
+            formData.append('someName', file);
+            formData.append("company_id", companyId);
+
+    $.ajax({
+      url: `${url}/resource/add/v2`,
+      type: "POST",
+      body: formData,
+      success: function(res){
+        console.log(res.json());
+      },
+      error: function(e){
+        console.error(e)
+    }
+    })
     totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
 
     for (var step = 0; step < totalSteps; step++) {
@@ -60,17 +77,3 @@ dropzone.uploadFiles = function(files) {
     }
   }
 }
-
-const formData = new FormData();
-const button = document.getElementById('button');
-const url = "https://staging-webservice.supportgenie.io/v3"
-const companyId = '5c01af56830f7879b727607d'
-
-button.addEventListener("click", function(){
-const response = await fetch(`${url}/resource/add/v2`, {
-            method: 'POST',
-            body: formData,
-            headers: headers
-        })
-        let result = await response.json()
-});
