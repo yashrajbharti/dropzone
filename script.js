@@ -13,8 +13,8 @@ var dropzone = new Dropzone('#demo-upload', {
       for (var i = 0; i < images.length; i++) {
         var thumbnailElement = images[i];
         thumbnailElement.alt = file.name;
-        file.myCustomName = array[1] + file.name.split('.').pop();
-        console.log(file.myCustomName);
+      //  file.myCustomName = array[1] + file.name.split('.').pop();
+        console.log(file.name);
         console.log(array);
         thumbnailElement.src = dataUrl;
       }
@@ -23,10 +23,10 @@ var dropzone = new Dropzone('#demo-upload', {
   }
 });
 Dropzone.autoDiscover = false;
-dropzone.on("sending", function(file) {
-    file.myCustomName = array[1] + file.name.split('.').pop();
-    console.log(file.myCustomName);
-});
+// dropzone.on("sending", function(file) {
+//     file.myCustomName = array[1] + file.name.split('.').pop();
+//     console.log(file.myCustomName);
+// });
 // Now fake the file upload, since GitHub does not handle file uploads
 // and returns a 404
 
@@ -51,7 +51,7 @@ dropzone.uploadFiles = function(files) {
       type: "POST",
       body: formData,
       success: function(res){
-        console.log(res.json());
+        console.log(res);
       },
       error: function(e){
         console.error(e)
