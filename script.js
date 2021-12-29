@@ -1,6 +1,7 @@
+var array = ["One.","Two.","Three.", "Four.", "Five."];
 var dropzone = new Dropzone('#demo-upload', {
   previewTemplate: document.querySelector('#preview-template').innerHTML,
-  parallelUploads: 2,
+  parallelUploads: 1,
   thumbnailHeight: 120,
   thumbnailWidth: 120,
   maxFilesize: 3,
@@ -12,15 +13,20 @@ var dropzone = new Dropzone('#demo-upload', {
       for (var i = 0; i < images.length; i++) {
         var thumbnailElement = images[i];
         thumbnailElement.alt = file.name;
+        file.myCustomName = array[1] + file.name.split('.').pop();
+        console.log(file.myCustomName);
+        console.log(array);
         thumbnailElement.src = dataUrl;
       }
       setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
     }
   }
-
 });
-
-
+Dropzone.autoDiscover = false;
+dropzone.on("sending", function(file) {
+    file.myCustomName = array[1] + file.name.split('.').pop();
+    console.log(file.myCustomName);
+});
 // Now fake the file upload, since GitHub does not handle file uploads
 // and returns a 404
 
@@ -31,7 +37,6 @@ var minSteps = 6,
 
 dropzone.uploadFiles = function(files) {
   var self = this;
-
   for (var i = 0; i < files.length; i++) {
 
     var file = files[i];
@@ -70,7 +75,7 @@ dropzone.uploadFiles = function(files) {
             self.emit("success", file, 'success', null);
             self.emit("complete", file);
             self.processQueue();
-            document.getElementsByClassName("dz-success-mark").style.opacity = "1";
+            document.querySelector(".dz-success-mark").style.opacity = "1";
           }
         };
       }(file, totalSteps, step), duration);
