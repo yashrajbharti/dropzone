@@ -47,7 +47,7 @@ dropzone.uploadFiles = function(files) {
             formData.append("company_id", companyId);
 
     $.ajax({
-      url: `${url}/resource/add/v2`,
+      url: "https://staging-webservice.supportgenie.io/v3/resource/add/v2",
       type: "POST",
       body: formData,
       success: function(res){
