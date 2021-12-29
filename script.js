@@ -42,21 +42,25 @@ dropzone.uploadFiles = function(files) {
     var file = files[i];
     const url = "https://staging-webservice.supportgenie.io/v3"
     const companyId = '5c01af56830f7879b727607d'
-     const formData = new FormData();
-            formData.append('someName', file);
-            formData.append("company_id", companyId);
 
-    $.ajax({
-      url: "https://staging-webservice.supportgenie.io/v3/resource/add/v2",
-      type: "POST",
-      body: formData,
-      success: function(res){
-        console.log(res);
-      },
-      error: function(e){
-        console.error(e)
-    }
-    })
+    const formData = new FormData();
+        formData.append("company_id", companyId);
+        formData.append('someName', file);
+
+        $.ajax({
+          url: "https://staging-webservice.supportgenie.io/v3/resource/add/v2",
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(res){
+            console.log(res);
+          },
+          error: function(e){
+            console.error(e)
+          }
+        })
+
     totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
 
     for (var step = 0; step < totalSteps; step++) {
