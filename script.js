@@ -50,7 +50,6 @@ dropzone.uploadFiles = function(files) {
       url: `${url}/resource/add/v2`,
       type: "POST",
       body: formData,
-       crossDomain:true,
       success: function(res){
         console.log(res);
       },
